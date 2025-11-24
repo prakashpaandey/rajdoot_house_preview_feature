@@ -19,7 +19,7 @@ class HousePreviewController extends Controller
     public function index(Request $request): JsonResponse
     {
         $perPage =  $request->get('per_page', 15);
-        $status = $request->get('status'); // Filter by status if provided
+        $status = $request->get('status');
         
         $query = HousePreview::query()->latest();
         
@@ -49,10 +49,9 @@ class HousePreviewController extends Controller
             
             $customerData = $validated['customer'];
             
-            // Find existing customer by phone (unique identifier)
+
             $customer = \App\Models\Customer::where('phone', $customerData['phone'])->first();
             
-            // Create new customer if not found
             if (!$customer) {
                 $customer = \App\Models\Customer::create($customerData);
             }
