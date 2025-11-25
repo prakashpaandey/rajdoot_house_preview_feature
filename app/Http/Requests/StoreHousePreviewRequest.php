@@ -24,9 +24,9 @@ class StoreHousePreviewRequest extends FormRequest
         return [
             
             'customer' => ['required', 'array'],
-            'customer.name' => ['required', 'string', 'max:255'],
-            'customer.phone' => ['required', 'string', 'max:20'],
-            'customer.address' => ['required', 'string'],
+            'customer.name' => ['required', 'string', 'min:4', 'max:255'],
+            'customer.phone' => ['required', 'string', 'size:10', 'regex:/^[0-9]{10}$/'],
+            'customer.address' => ['required', 'string', 'min:4'],
             'colors' => ['nullable', 'string'],
             'png_image' => ['required', 'image', 'mimes:png', 'max:10240'],
             'svg_image' => ['nullable', 'file', 'mimes:svg', 'max:5120'],
@@ -44,13 +44,17 @@ class StoreHousePreviewRequest extends FormRequest
         return [
             'customer.required' => 'Customer information is required.',
             'customer.name.required' => 'Customer name is required.',
+            'customer.name.min' => 'Customer name must be at least 4 characters.',
             'customer.phone.required' => 'Contact number is required.',
-            'customer.email.email' => 'Please provide a valid email address.',
+            'customer.phone.size' => 'Phone number must be exactly 10 digits.',
+            'customer.phone.regex' => 'Phone number must contain only digits (0-9).',
             'customer.address.required' => 'Address is required.',
+            'customer.address.min' => 'Address must be at least 4 characters.',
             
-            'png_image.image' => 'PNG file must be a valid image.',
-            'png_image.mimes' => 'PNG file must be in PNG format.',
-            'png_image.max' => 'PNG image must not exceed 10MB.',
+            'png_image.required' => 'House image is required.',
+            'png_image.image' => 'The file must be an image.',
+            'png_image.mimes' => 'Image must be in PNG format.',
+            'png_image.max' => 'Image must not exceed 10MB.',
             
             'svg_image.mimes' => 'SVG file must be in SVG format.',
             'svg_image.max' => 'SVG file must not exceed 5MB.',
