@@ -46,24 +46,24 @@ class HousePreviewController extends Controller
         try {
             $validated = $request->validated();
             
-            
             $customerData = $validated['customer'];
             
-
+            // Find existing customer by phone (unique identifier)
             $customer = \App\Models\Customer::where('phone', $customerData['phone'])->first();
             
+            // Create new customer if not found
             if (!$customer) {
                 $customer = \App\Models\Customer::create($customerData);
             }
             
-            
-            $pngImagePath = null;
-            if ($request->hasFile('png_image')) {
-                $image = $request->file('png_image');
-                $pngImagePath = $image->store('house_previews/png', 'public');
+            // Handle image upload
+            $houseImagePath = null;
+            if ($request->hasFile('house_image')) {
+                $image = $request->file('house_image');
+                $houseImagePath = $image->store('house_previews/images', 'public');
             }
             
-            
+            // Handle SVG image upload
             $svgImagePath = null;
             if ($request->hasFile('svg_image')) {
                 $image = $request->file('svg_image');
@@ -73,7 +73,7 @@ class HousePreviewController extends Controller
             $housePreview = \App\Models\HousePreview::create([
                 'customer_id' => $customer->id,
                 'colors' => $validated['colors'] ?? null,
-                'png_image' => $pngImagePath,
+                'house_image' => $houseImagePath,
                 'svg_image' => $svgImagePath,
                 'customer_message' => $validated['customer_message'] ?? null,
             ]);
@@ -168,8 +168,8 @@ class HousePreviewController extends Controller
             ], 404);
         }
         
-        if ($housePreview->png_image && Storage::disk('public')->exists($housePreview->png_image)) {
-            Storage::disk('public')->delete($housePreview->png_image);
+        if ($housePreview->house_image && Storage::disk('public')->exists($housePreview->house_image)) {
+            Storage::disk('public')->delete($housePreview->house_image);
         }
         
         if ($housePreview->svg_image && Storage::disk('public')->exists($housePreview->svg_image)) {

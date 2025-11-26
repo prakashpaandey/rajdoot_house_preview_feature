@@ -19,7 +19,7 @@ class HousePreview extends Model
     protected $fillable = [
         'customer_id',
         'colors',
-        'png_image',
+        'house_image',
         'svg_image',
         'customer_message',
         'status',
@@ -51,7 +51,7 @@ class HousePreview extends Model
      *
      * @var array<int, string>
      */
-    protected $appends = ['png_image_url', 'svg_image_url', 'colors_array'];
+    protected $appends = ['house_image_url', 'svg_image_url', 'colors_array'];
 
     /**
      * Get the customer that owns this house preview.
@@ -74,14 +74,14 @@ class HousePreview extends Model
     }
 
     /**
-     * Get the full URL for the PNG image.
+     * Get the full URL for the house image.
      *
      * @return string|null
      */
-    public function getPngImageUrlAttribute(): ?string
+    public function getHouseImageUrlAttribute(): ?string
     {
-        if ($this->png_image) {
-            return asset('storage/' . $this->png_image);
+        if ($this->house_image) {
+            return asset('storage/' . $this->house_image);
         }
         return null;
     }

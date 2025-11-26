@@ -28,7 +28,7 @@ class StoreHousePreviewRequest extends FormRequest
             'customer.phone' => ['required', 'string', 'size:10', 'regex:/^[0-9]{10}$/'],
             'customer.address' => ['required', 'string', 'min:4'],
             'colors' => ['nullable', 'string'],
-            'png_image' => ['required', 'image', 'mimes:png', 'max:10240'],
+            'house_image' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:10240'],
             'svg_image' => ['nullable', 'file', 'mimes:svg', 'max:5120'],
             'customer_message' => ['nullable', 'string'],
         ];
@@ -51,10 +51,10 @@ class StoreHousePreviewRequest extends FormRequest
             'customer.address.required' => 'Address is required.',
             'customer.address.min' => 'Address must be at least 4 characters.',
             
-            'png_image.required' => 'House image is required.',
-            'png_image.image' => 'The file must be an image.',
-            'png_image.mimes' => 'Image must be in PNG format.',
-            'png_image.max' => 'Image must not exceed 10MB.',
+            'house_image.required' => 'House image is required.',
+            'house_image.image' => 'The file must be an image.',
+            'house_image.mimes' => 'Image must be in JPG, JPEG, or PNG format.',
+            'house_image.max' => 'Image must not exceed 10MB.',
             
             'svg_image.mimes' => 'SVG file must be in SVG format.',
             'svg_image.max' => 'SVG file must not exceed 5MB.',

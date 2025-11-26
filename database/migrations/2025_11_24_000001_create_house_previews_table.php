@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('house_previews', function (Blueprint $table) {
             $table->id();
             
-           
             $table->foreignId('customer_id')
                   ->constrained('customers')
                   ->onDelete('cascade');
             
             $table->text('colors')->nullable();
-            $table->string('png_image');
+            $table->string('house_image');
             $table->string('svg_image')->nullable();
             $table->text('customer_message')->nullable();
             $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])
